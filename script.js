@@ -17,7 +17,7 @@ function hydrateFields() {
 }
 
 function updateCountdown() {
-  const eventTime = new Date(text("eventDate")).getTime();
+  const eventTime = new Date("2027-06-11T21:00:00").getTime();
   const ids = ["days", "hours", "minutes", "seconds"];
   if (!Number.isFinite(eventTime)) return;
 

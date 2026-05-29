@@ -905,3 +905,43 @@ h2 {
   .modal-content { height: 50vh; }
   .modal-nav { padding: 10px; font-size: 1.2rem; }
 }
+
+/* --- MEJORAS VISUALES PARA MÓVIL Y DISEÑO PREMIUM --- */
+
+/* 1. Efecto cristal (Glassmorphism) para los recuadros de la cuenta atrás */
+.countdown div {
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  border-radius: 12px !important;
+  transition: transform 0.3s ease;
+}
+
+/* 2. Sombra y resplandor para el billete de Karol G */
+.ticket {
+  border-radius: 16px !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 0 20px 50px rgba(255, 79, 163, 0.15), 
+              0 0 0 1px rgba(255, 255, 255, 0.2) inset !important;
+}
+
+/* 3. Ajustes de márgenes para que "respire" mejor en pantallas pequeñas */
+@media (max-width: 520px) {
+  .hero {
+    padding-top: 40px !important;
+  }
+  .ticket-main {
+    padding: 32px 24px !important;
+  }
+  .countdown {
+    gap: 8px !important; /* Cajas un poco más juntas para que no rocen los bordes */
+  }
+  .countdown div {
+    padding: 16px 10px !important;
+  }
+  .countdown strong {
+    font-size: 1.8rem !important; /* Números un pelín más pequeños para que no se corten */
+  }
+}
