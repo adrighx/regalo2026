@@ -1,0 +1,28 @@
+<svg width="900" height="1200" viewBox="0 0 900 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="900" height="1200" rx="28" fill="#171119"/>
+  <path d="M0 0h900v1200H0z" fill="url(#paint0_radial)"/>
+  <path d="M106 161c104-89 275-74 359 35 50 64 79 150 168 169 51 10 103-9 151 11 87 36 101 162 28 222-87 72-249-21-322 68-65 79 26 189-18 281-41 86-174 86-252 30-101-73-132-204-126-328 5-112 31-233-17-333-27-56-51-111 29-155Z" fill="#FF4FA3"/>
+  <path d="M624 168c68 14 130 69 149 136 22 80-25 146-72 206-45 58-87 119-91 195-4 70 25 138 16 208-9 72-61 141-133 154-64 12-119-25-166-65-47-41-94-86-156-92-44-4-91 12-130-8-51-26-51-105-17-151 34-47 93-68 142-102 88-61 139-163 185-260 55-117 135-249 273-221Z" fill="#2DD6C6" opacity=".86"/>
+  <path d="M726 112 175 1088" stroke="#FFF8F1" stroke-width="46" stroke-linecap="round" opacity=".16"/>
+  <path d="M196 97 719 1101" stroke="#FFF8F1" stroke-width="38" stroke-linecap="round" opacity=".13"/>
+  <path d="M450 208v322" stroke="#FFF8F1" stroke-width="16" stroke-linecap="round"/>
+  <circle cx="450" cy="184" r="62" fill="#D8FF67" stroke="#171119" stroke-width="10"/>
+  <path d="M379 543h142l56 372H323l56-372Z" fill="#FFF8F1" stroke="#171119" stroke-width="10" stroke-linejoin="round"/>
+  <path d="M395 575h110l29 212H366l29-212Z" fill="#6E4CFF"/>
+  <path d="M366 787h168l20 128H346l20-128Z" fill="#FF745C"/>
+  <path d="M259 974c118-53 264-54 382-2" stroke="#D8FF67" stroke-width="20" stroke-linecap="round"/>
+  <path d="M229 1017c140-61 302-60 443 0" stroke="#FFF8F1" stroke-width="11" stroke-linecap="round" opacity=".8"/>
+  <circle cx="225" cy="344" r="50" fill="#D8FF67" stroke="#171119" stroke-width="8"/>
+  <circle cx="683" cy="336" r="42" fill="#FF745C" stroke="#171119" stroke-width="8"/>
+  <circle cx="213" cy="696" r="31" fill="#FF745C" stroke="#171119" stroke-width="7"/>
+  <circle cx="701" cy="723" r="36" fill="#D8FF67" stroke="#171119" stroke-width="7"/>
+  <path d="M146 475c32-34 70-34 102 0M652 474c32-34 70-34 102 0" stroke="#FFF8F1" stroke-width="15" stroke-linecap="round"/>
+  <path d="m184 247 34-28 43 75 48-89 40 27-88 168-77-153ZM594 247l35-28 42 75 48-89 40 27-88 168-77-153Z" fill="#FFF8F1"/>
+  <path d="M153 1085h594" stroke="#171119" stroke-width="32" stroke-linecap="round" opacity=".28"/>
+  <defs>
+    <radialGradient id="paint0_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(447 546) rotate(90) scale(678 508)">
+      <stop stop-color="#FFF8F1" stop-opacity=".12"/>
+      <stop offset="1" stop-color="#171119" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>
