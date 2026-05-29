@@ -17,32 +17,27 @@ function hydrateFields() {
 }
 
 function updateCountdown() {
+  // Fecha fijada a fuego: 11 de Junio de 2027 a las 21:00h
   const eventTime = new Date("2027-06-11T21:00:00").getTime();
   const ids = ["days", "hours", "minutes", "seconds"];
+  
   if (!Number.isFinite(eventTime)) return;
 
-  // Capturamos el elemento de texto que acabamos de crear en el HTML
   const titleNode = document.getElementById("countdown-title");
 
   const tick = () => {
     const now = Date.now();
-    
-    // Evaluamos si el concierto está en el futuro (true) o en el pasado (false)
     const isFuture = eventTime > now;
-    
-    // Usamos Math.abs() para obtener la distancia siempre en positivo
     const distance = Math.abs(eventTime - now);
 
-    // Manipulamos el DOM: cambiamos el texto según el estado de la variable booleana
     if (titleNode) {
       if (isFuture) {
-        titleNode.textContent = "Faltan para el gran día:";
+        titleNode.textContent = "Faltan para la gran noche:";
       } else {
-        titleNode.textContent = "Tiempo desde este incríble día:";
+        titleNode.textContent = "Tiempo desde nuestra noche mágica:";
       }
     }
 
-    // El cálculo matemático se mantiene intacto
     const days = Math.floor(distance / 86400000);
     const hours = Math.floor((distance % 86400000) / 3600000);
     const minutes = Math.floor((distance % 3600000) / 60000);
@@ -98,76 +93,7 @@ function setupQr() {
   if (caption) caption.textContent = publicUrl;
 }
 
-function setupInteractiveAlbum() {
-  const modal = document.getElementById("album-modal");
-  const modalImg = document.getElementById("modal-img");
-  const modalCaption = document.getElementById("modal-caption");
-  const btnClose = document.getElementById("modal-close");
-  const btnPrev = document.getElementById("modal-prev");
-  const btnNext = document.getElementById("modal-next");
-
-  if (!modal || !modalImg) return;
-
-  let currentAlbumImages = [];
-  let currentIndex = 0;
-
-  // Abrir el álbum al hacer clic en una Polaroid
-  document.querySelectorAll(".polaroid").forEach((polaroid) => {
-    polaroid.addEventListener("click", () => {
-      const imagesString = polaroid.dataset.images;
-      const albumTitle = polaroid.dataset.album;
-
-      if (!imagesString) return;
-
-      // Convertimos el string separado por comas en un Array de rutas
-      currentAlbumImages = imagesString.split(",");
-      currentIndex = 0;
-
-      // Actualizamos el modal con la primera foto
-      modalImg.src = currentAlbumImages[currentIndex];
-      if (modalCaption) modalCaption.textContent = albumTitle;
-
-      // Mostramos el modal
-      modal.classList.add("active");
-      document.body.style.overflow = "hidden"; // Bloquea el scroll de fondo
-    });
-  });
-
-  // Funciones de navegación
-  const showNextImage = () => {
-    currentIndex = (currentIndex + 1) % currentAlbumImages.length;
-    modalImg.src = currentAlbumImages[currentIndex];
-  };
-
-  const showPrevImage = () => {
-    currentIndex = (currentIndex - 1 + currentAlbumImages.length) % currentAlbumImages.length;
-    modalImg.src = currentAlbumImages[currentIndex];
-  };
-
-  const closeModal = () => {
-    modal.classList.remove("active");
-    document.body.style.overflow = ""; // Restaura el scroll
-  };
-
-  // Event Listeners de los botones del modal
-  btnNext.addEventListener("click", (e) => { e.stopPropagation(); showNextImage(); });
-  btnPrev.addEventListener("click", (e) => { e.stopPropagation(); showPrevImage(); });
-  btnClose.addEventListener("click", closeModal);
-  modal.addEventListener("click", closeModal); // Cierra también si hace clic fuera de la foto
-
-  // Evita que al hacer clic en la foto misma se cierre el modal
-  modalImg.addEventListener("click", (e) => e.stopPropagation());
-
-  // Soporte para teclado (Flechas e Escape)
-  document.addEventListener("keydown", (e) => {
-    if (!modal.classList.contains("active")) return;
-    if (e.key === "ArrowRight") showNextImage();
-    if (e.key === "ArrowLeft") showPrevImage();
-    if (e.key === "Escape") closeModal();
-  });
-}
-
-setupInteractiveAlbum();
+// Inicialización de todas las funciones
 hydrateFields();
 updateCountdown();
 setupReveal();
