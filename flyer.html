@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Ni el título de la pestaña destripa la sorpresa -->
+    <title>Panfleto imprimible</title>
+    <meta name="robots" content="noindex" />
+    <meta name="description" content="Panfleto imprimible en A4 con el código QR del regalo." />
+
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="config.js"></script>
+  </head>
+
+  <body class="print-body">
+    <!-- Estos botones no salen al imprimir -->
+    <div class="print-actions">
+      <button class="btn btn--primary" onclick="window.print()" type="button">
+        Imprimir en A4
+      </button>
+      <a class="btn btn--ghost" href="index.html">Volver a la página</a>
+    </div>
+
+    <article class="flyer">
+      <!-- ---------------- Columna de fotos ---------------- -->
+      <div class="flyer-art">
+        <div class="flyer-mosaic" id="flyer-mosaic" aria-hidden="true"></div>
+        <p class="flyer-badge">Ábrelo con la cámara</p>
+      </div>
+
+      <!-- ---------------- Columna de texto ---------------- -->
+      <div class="flyer-content">
+        <!-- IMPORTANTE: nada de este bloque puede destripar la sorpresa.
+             Los textos salen del apartado "flyer" de config.js. -->
+        <p class="flyer-kicker" data-flyer="kicker">Para el amor de mi vida · Feliz cumpleaños</p>
+
+        <h1 data-flyer="title">Tu regalo no cabe en este papel.</h1>
+
+        <p class="flyer-lead" data-flyer="lead">
+          Lo que te he preparado no se puede envolver ni meter en una caja. Está entero detrás de
+          este código.
+        </p>
+
+        <div class="flyer-qr">
+          <!-- QR guardado como archivo del proyecto: funciona aunque
+               desaparezca cualquier servicio externo. Si algún día cambias
+               la dirección de la web, regenera este archivo. -->
+          <img src="assets/qr-regalo.svg" alt="Código QR que lleva a la página del regalo" />
+          <div class="flyer-qr-text">
+            <strong data-flyer="qrTitle">Escanéame</strong>
+            <p data-flyer="qrText">Aquí dentro está el regalo. Y un álbum que iremos llenando.</p>
+            <code id="flyer-url">https://adrighx.github.io/regalo2026/</code>
+          </div>
+        </div>
+
+        <p class="flyer-note" data-flyer="note">
+          Guarda este papel: el código seguirá funcionando mucho después de esa noche. Ahí iremos
+          dejando las fotos, para poder volver cuando queramos.
+        </p>
+
+        <p class="flyer-sign" data-flyer="sign">Ábrelo. Te va a gustar.</p>
+      </div>
+    </article>
+
+    <!-- El panfleto no usa script.js: se monta solo, con sus propios textos -->
+    <script>
+      // Piezas propias del panfleto: textos, mosaico de fotos y dirección del QR.
+      document.addEventListener("DOMContentLoaded", () => {
+        const cfg = window.GIFT_CONFIG || {};
+        const f = cfg.flyer || {};
+
+        // Textos: solo los del apartado "flyer", nunca los de la página
+        document.querySelectorAll("[data-flyer]").forEach((nodo) => {
+          const v = f[nodo.dataset.flyer];
+          if (v) nodo.textContent = v;
+        });
+
+        const mosaico = document.getElementById("flyer-mosaic");
+        const fotos = (cfg.heroPhotos || []).slice(0, 8);
+        if (mosaico) {
+          fotos.forEach((archivo) => {
+            // Cada foto en su celda, para poder reencuadrarla desde el CSS
+            const celda = document.createElement("div");
+            celda.className = "flyer-cell";
+
+            const img = document.createElement("img");
+            img.src = "assets/collage/" + archivo;
+            img.alt = "";
+
+            celda.append(img);
+            mosaico.append(celda);
+          });
+        }
+
+        const url = document.getElementById("flyer-url");
+        if (url && cfg.publicUrl) url.textContent = cfg.publicUrl;
+      });
+    </script>
+  </body>
+</html>

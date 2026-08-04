@@ -1,0 +1,7 @@
+Copia aqui TODAS las fotos del dia del concierto.
+Despues abre config.js y escribe los nombres de archivo en la lista "photos".
+Ejemplo:
+
+    photos: ["sevilla-01.jpg", "sevilla-02.jpg", "sevilla-03.jpg"]
+
+Puedes borrar este archivo cuando ya tengas fotos.

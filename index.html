@@ -1,206 +1,263 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" data-phase="antes">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Reglo Monica</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#120a16" />
+
+    <title>Un regalo para Mónica · Karol G en Sevilla</title>
     <meta
       name="description"
-      content="Una página sorpresa para regalar entradas de concierto en Sevilla."
+      content="Dos entradas para ver a Karol G en Sevilla el 11 de junio de 2027. Y un sitio donde guardar esa noche para siempre."
     />
+
+    <!-- Para que se vea bonito al compartir el enlace por WhatsApp -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Un regalo para Mónica" />
+    <meta
+      property="og:description"
+      content="Karol G. Sevilla. 11 de junio de 2027. Dos entradas."
+    />
+    <!-- WhatsApp y compañía necesitan la dirección completa, no una ruta relativa -->
+    <meta property="og:url" content="https://adrighx.github.io/regalo2026/" />
+    <meta
+      property="og:image"
+      content="https://adrighx.github.io/regalo2026/assets/collage/photo-10.jpg"
+    />
+    <meta property="og:locale" content="es_ES" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="assets/collage/thumb/photo-10.jpg" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
     <script src="config.js"></script>
     <script src="script.js" defer></script>
   </head>
+
   <body>
-    <main class="page-shell">
-      <section class="hero" aria-labelledby="hero-title">
-        <div class="stage-lights" aria-hidden="true">
-          <span></span>
-          <span></span>
-          <span></span>
+    <a class="skip-link" href="#regalo">Ir directamente al regalo</a>
+
+    <!-- ============================ PORTADA ============================ -->
+    <header class="hero" id="inicio">
+      <div class="aurora" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="grain" aria-hidden="true"></div>
+
+      <nav class="topbar" aria-label="Navegación">
+        <a class="brand" href="#inicio" aria-label="Te amo">
+          <span class="brand-heart" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20">
+              <path fill="currentColor" d="M12 21C5.5 16.4 2 13 2 9.2 2 6.3 4.3 4 7.2 4c1.7 0 3.3.8 4.3 2.1L12 6.4l.5-.3C13.5 4.8 15.1 4 16.8 4 19.7 4 22 6.3 22 9.2 22 13 18.5 16.4 12 21Z"/>
+            </svg>
+          </span>
+          <span class="brand-text" aria-hidden="true">
+            <b>T</b><b>E</b><i></i><b>A</b><b>M</b><b>O</b>
+          </span>
+        </a>
+        <div class="topbar-links">
+          <a class="nav-link" href="#album">Álbum</a>
+          <a class="nav-link nav-link--print" href="flyer.html">Panfleto</a>
+        </div>
+      </nav>
+
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">
+            <span class="dot" aria-hidden="true"></span>
+            Una sorpresa con destino a <span data-field="city">Sevilla</span>
+          </p>
+
+          <h1 id="hero-title" data-field="heroTitle">Prepárate para un día inolvidable.</h1>
+
+          <p class="lead" data-field="message">
+            Te he preparado una sorpresa: el 11 de junio nos vamos a Sevilla a vivir una noche de música,
+            brillo y perreo bonito.
+          </p>
+
+          <div class="actions">
+            <button class="btn btn--primary" id="reveal-button" type="button">
+              <span>Descubrir el regalo</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18">
+                <path d="M12 5v14m0 0-6-6m6 6 6-6" fill="none" stroke="currentColor"
+                      stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <a class="btn btn--ghost" data-field-href="playlistUrl" href="#musica">
+              Calentar motores
+            </a>
+          </div>
         </div>
 
-        <nav class="topbar" aria-label="Detalles del regalo">
-          <a class="brand" href="#ticket" aria-label="Ir a la sorpresa">
-            <span class="brand-mark">KG</span>
-            <span data-field="projectName">Reglo Monica</span>
-          </a>
-          <a class="nav-link" href="flyer.html">Panfleto</a>
-        </nav>
+        <figure class="poster" aria-label="Fotos nuestras">
+          <div class="poster-collage" id="hero-collage" aria-hidden="true"></div>
+          <figcaption>
+            <span>Gira en España</span>
+            <strong data-field="artist">Karol G</strong>
+          </figcaption>
+        </figure>
+      </div>
 
-        <div class="hero-grid">
-          <div class="hero-copy">
-            <p class="eyebrow">Una sorpresa con destino a <span data-field="city">Sevilla</span></p>
-            <h1 id="hero-title">Prepárate para una noche bonita.</h1>
-            <p class="lead" data-field="message">
-              Te he preparado una sorpresa: en 2027 nos vamos a Sevilla a vivir una noche de música,
-              brillo y perreo bonito.
+      <div class="scroll-hint" aria-hidden="true">
+        <span></span>
+      </div>
+    </header>
+
+    <main>
+      <!-- ============================ EL REGALO ============================ -->
+      <section class="reveal-band" id="regalo" aria-labelledby="ticket-title">
+        <div class="wrap">
+          <div class="section-heading reveal">
+            <p class="eyebrow"><span class="dot" aria-hidden="true"></span> El regalo</p>
+            <h2 id="ticket-title">Dos entradas. Karol G. Muchísimas canciones. Un día inolvidable.</h2>
+          </div>
+
+          <div class="ticket-holder" id="ticket-holder" data-locked="true">
+            <article class="ticket reveal" aria-label="Entrada regalo">
+              <div class="ticket-main">
+                <p class="ticket-kicker">
+                  Sorpresa para <span data-field="partnerLabel">el amor de mi vida</span>
+                </p>
+                <h3 data-field="revealLine">¡Tenemos entradas para ver a Karol G en Sevilla!</h3>
+
+                <dl class="ticket-details">
+                  <div>
+                    <dt>Artista</dt>
+                    <dd data-field="artist">Karol G</dd>
+                  </div>
+                  <div>
+                    <dt>Ciudad</dt>
+                    <dd>
+                      <span data-field="city">Sevilla</span>,
+                      <span data-field="country">España</span>
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Fecha</dt>
+                    <dd data-field="dateLabel">11 de junio de 2027</dd>
+                  </div>
+                  <div>
+                    <dt>Recinto</dt>
+                    <dd data-field="venue">Estadio La Cartuja</dd>
+                  </div>
+                </dl>
+              </div>
+
+              <div class="ticket-stub" aria-hidden="true">
+                <strong data-field="tickets">2</strong>
+                <small>entradas</small>
+                <div class="stub-code"></div>
+              </div>
+            </article>
+
+            <!-- Tapa que oculta el regalo hasta que ella pulsa el botón -->
+            <div class="ticket-lock" id="ticket-lock">
+              <button type="button" class="lock-button" id="lock-button">
+                <span class="lock-emoji" aria-hidden="true">🎁</span>
+                <span class="lock-text">Toca para abrir</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- --------------------- CUENTA ATRÁS --------------------- -->
+          <div class="countdown-block reveal">
+            <p class="eyebrow countdown-label" id="countdown-label">
+              <span class="dot" aria-hidden="true"></span>
+              <span id="countdown-label-text">Faltan para la gran noche</span>
             </p>
 
-            <div class="actions">
-              <button class="primary-button" id="reveal-button" type="button">
-                Descubrir regalo
-              </button>
-              <a class="ghost-button" data-field-href="playlistUrl" href="https://open.spotify.com/search/Karol%20G">
-                Calentar motores
-              </a>
+            <div class="countdown" id="countdown" role="timer" aria-live="off">
+              <div><strong id="days">--</strong><span>días</span></div>
+              <div><strong id="hours">--</strong><span>horas</span></div>
+              <div><strong id="minutes">--</strong><span>min</span></div>
+              <div><strong id="seconds">--</strong><span>seg</span></div>
+            </div>
+
+            <p class="countdown-note">
+              <span data-field="venue">Estadio La Cartuja</span> ·
+              <span data-field="dateLabel">11 de junio de 2027</span> ·
+              <span data-field="timeLabel">21:00 h</span>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================ LA CARTA ============================ -->
+      <section class="letter" id="musica" aria-labelledby="letter-title">
+        <div class="wrap letter-grid">
+          <div class="reveal">
+            <p class="eyebrow"><span class="dot" aria-hidden="true"></span> Antes de ir</p>
+            <h2 id="letter-title" data-field="letterTitle">Esto no es solo un concierto.</h2>
+          </div>
+
+          <div class="letter-body reveal">
+            <p data-field="letterBody">
+              Es una excusa preciosa para hacer maleta, perdernos por Sevilla, llegar al Estadio La
+              Cartuja, brindar por nosotros y guardar una noche de esas que se cuentan muchas veces
+              después.
+            </p>
+            <p class="letter-sign" data-field="footerLine">
+              Un regalo para empezar a cantar antes de llegar.
+            </p>
+
+            <div class="player" id="player">
+              <!-- El iframe de Spotify lo monta script.js con el id de config.js -->
             </div>
           </div>
-
-          <figure class="poster-visual" aria-label="Collage de fotos del regalo">
-            <div class="photo-collage" aria-hidden="true">
-              <img src="assets/collage/photo-01.jpg" alt="" />
-              <img src="assets/collage/photo-05.jpg" alt="" />
-              <img src="assets/collage/photo-08.jpg" alt="" />
-              <img src="assets/collage/photo-10.jpg" alt="" />
-              <img src="assets/collage/photo-12.jpg" alt="" />
-              <img src="assets/collage/photo-14.jpg" alt="" />
-              <img src="assets/collage/photo-17.jpg" alt="" />
-              <img src="assets/collage/photo-21.jpg" alt="" />
-              <img src="assets/collage/photo-24.jpg" alt="" />
-            </div>
-            <figcaption>
-              <span>Gira en España</span>
-              <strong data-field="artist">Karol G</strong>
-            </figcaption>
-          </figure>
         </div>
       </section>
 
-      <section class="reveal-band" id="ticket" aria-labelledby="ticket-title">
-        <div class="section-heading">
-          <p class="eyebrow">El regalo</p>
-          <h2 id="ticket-title">Dos entradas. Una ciudad. Muchísimas canciones.</h2>
-        </div>
+      <!-- ============================ EL ÁLBUM ============================ -->
+      <section class="album" id="album" aria-labelledby="album-title">
+        <div class="wrap">
+          <div class="section-heading reveal">
+            <p class="eyebrow"><span class="dot" aria-hidden="true"></span> El álbum de la noche</p>
+            <h2 id="album-title">Aquí guardaremos los recuerdos de esa noche.</h2>
+            <p class="section-sub" id="album-sub">
+              Todavía está en blanco. El 11 de junio de 2027 empezamos a llenarlo.
+            </p>
+          </div>
 
-        <article class="ticket" aria-label="Entrada regalo">
-          <div class="ticket-main">
-            <p class="ticket-kicker">Sorpresa para <span data-field="partnerName">Mónica</span></p>
-            <h3 data-field="revealLine">Tenemos entradas para ver a Karol G en Sevilla.</h3>
-            <dl class="ticket-details">
-              <div>
-                <dt>Artista</dt>
-                <dd data-field="artist">Karol G</dd>
-              </div>
-              <div>
-                <dt>Ciudad</dt>
-                <dd><span data-field="city">Sevilla</span>, <span data-field="country">España</span></dd>
-              </div>
-              <div>
-                <dt>Fecha</dt>
-                <dd data-field="dateLabel">11 de junio de 2027</dd>
-              </div>
-              <div>
-                <dt>Recinto</dt>
-                <dd data-field="venue">Estadio La Cartuja</dd>
-              </div>
-            </dl>
-          </div>
-          <div class="ticket-stub">
-            <span>VIP</span>
-            <strong>2</strong>
-            <small>entradas</small>
-          </div>
-        </article>
-
-        <p id="countdown-title" class="eyebrow" style="text-align: center; margin-top: 42px;"></p>
-        
-        <div class="countdown" aria-label="Cuenta atrás aproximada">
-          <div>
-            <strong id="days">--</strong>
-            <span>días</span>
-          </div>
-          <div>
-            <strong id="hours">--</strong>
-            <span>horas</span>
-          </div>
-          <div>
-            <strong id="minutes">--</strong>
-            <span>min</span>
-          </div>
-          <div>
-            <strong id="seconds">--</strong>
-            <span>seg</span>
-          </div>
+          <div class="album-gallery" id="album-gallery"></div>
         </div>
       </section>
 
-      <section class="letter" aria-labelledby="letter-title">
-        <div>
-          <p class="eyebrow">Antes de ir</p>
-          <h2 id="letter-title">Esto no es solo un concierto.</h2>
+      <footer class="site-footer">
+        <div class="wrap footer-grid">
+          <p>
+            Hecho a mano para <strong data-field="partnerLabel">el amor de mi vida</strong> ·
+            <span data-field="dateLabel">11 de junio de 2027</span>
+          </p>
+          <a class="nav-link" href="flyer.html">Ver el panfleto imprimible</a>
         </div>
-        <p>
-          Es una excusa preciosa para hacer maleta, perdernos por Sevilla, llegar al Estadio La
-          Cartuja, brindar por nosotros y guardar una noche de esas que se cuentan muchas veces
-          después.
-        </p>
-        <p data-field="footerLine">Un regalo para empezar a cantar antes de llegar.</p>
-          <div class="spotify-player" style="margin-top: 42px;">
-          <iframe 
-            style="border-radius:12px" 
-            src="https://open.spotify.com/playlist/37i9dQZF1DZ06evO4e5iLu?si=ZZ5VLIEEQOik3lgWDlxdHg" 
-            width="100%" 
-            height="152" 
-            frameBorder="0" 
-            allowfullscreen="" 
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-            loading="lazy">
-          </iframe>
-          </div>
-      </section>
-      <section class="memories" id="recuerdos" aria-labelledby="memories-title">
-  <div class="section-heading">
-    <p class="eyebrow">Para el futuro</p>
-    <h2 id="memories-title">Aquí guardaremos nuestros bonitos recuerdos de este día.</h2>
-  </div>
-
-  <div class="polaroid-gallery">
-    <div class="polaroid" style="--rot: -3deg;" 
-         data-album="De camino a Sevilla 🚆" 
-         data-images="assets/collage/photo-01.jpg,assets/collage/photo-02.jpg,assets/collage/photo-03.jpg">
-      <div class="polaroid-img empty">Ver álbum</div>
-      <p>De camino a Sevilla 🚆</p>
-    </div>
-
-    <div class="polaroid" style="--rot: 2deg;" 
-         data-album="Listos para Karol G ✨" 
-         data-images="assets/collage/photo-05.jpg,assets/collage/photo-08.jpg,assets/collage/photo-10.jpg">
-      <div class="polaroid-img empty">Ver álbum</div>
-      <p>Listos para Karol G ✨</p>
-    </div>
-
-    <div class="polaroid" style="--rot: -1deg;" 
-         data-album="Cantando a pleno pulmón 💖" 
-         data-images="assets/collage/photo-12.jpg,assets/collage/photo-14.jpg,assets/collage/photo-17.jpg">
-      <div class="polaroid-img empty">Ver álbum</div>
-      <p>Cantando a pleno pulmón 💖</p>
-    </div>
-  </div>
-</section>
-
-<div id="album-modal" class="album-modal" aria-hidden="true">
-  <button class="modal-close" id="modal-close" aria-label="Cerrar">&times;</button>
-  
-  <div class="modal-content">
-    <button class="modal-nav prev" id="modal-prev" aria-label="Anterior">&#10094;</button>
-    
-    <div class="modal-image-wrapper">
-      <img id="modal-img" src="" alt="Foto del álbum" />
-    </div>
-    
-    <button class="modal-nav next" id="modal-next" aria-label="Siguiente">&#10095;</button>
-  </div>
-  
-  <div id="modal-caption" class="modal-caption"></div>
-</div>
+      </footer>
     </main>
+
+    <!-- ============================ VISOR DE FOTOS ============================ -->
+    <div id="lightbox" class="lightbox" role="dialog" aria-modal="true"
+         aria-label="Visor de fotos" hidden>
+      <button class="lightbox-close" id="lightbox-close" aria-label="Cerrar visor">&times;</button>
+
+      <div class="lightbox-stage">
+        <button class="lightbox-nav prev" id="lightbox-prev" aria-label="Foto anterior">&#10094;</button>
+        <div class="lightbox-frame">
+          <!-- sin src: un src="" haría que el navegador pidiera la propia página -->
+          <img id="lightbox-img" alt="" />
+        </div>
+        <button class="lightbox-nav next" id="lightbox-next" aria-label="Foto siguiente">&#10095;</button>
+      </div>
+
+      <div class="lightbox-bar">
+        <p id="lightbox-caption"></p>
+        <p class="lightbox-counter" id="lightbox-counter"></p>
+      </div>
+    </div>
   </body>
 </html>
