@@ -1065,7 +1065,7 @@ button {
   transform-origin: left center;
 }
 
-@media (max-width: 820px) {
+@media screen and (max-width: 820px) {
   .flyer {
     grid-template-columns: 1fr;
     min-height: auto;
