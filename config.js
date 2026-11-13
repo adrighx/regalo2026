@@ -65,7 +65,7 @@ window.GIFT_CONFIG = {
     qrTitle: "Escanéame",
     qrText: "Aquí dentro está el regalo. Y un álbum que iremos llenando.",
     note:
-      "Instrucciones de conservación: este papel no se tira, no se dobla y no se usa de posavasos. El código va a seguir funcionando y ahí iremos subiendo fotos. Si lo pierdes te imprimo otro, pero pienso recordártelo en todas las discusiones hasta 2040.",
+      "Instrucciones de conservación: este papel no se tira, no se dobla y no se usa de posavasos. El código va a seguir funcionando, pero si lo pierdes pienso recordártelo en todas las discusiones hasta que se me olvide 😊",
     sign: "Ábrelo. Te va a gustar."
   },
 
