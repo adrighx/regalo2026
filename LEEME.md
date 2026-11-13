@@ -22,6 +22,21 @@ Publicada en: <https://adrighx.github.io/regalo2026/>
 
 ---
 
+## Cómo funciona la sorpresa (el rasca)
+
+La página es una tira de entradas. En el primer cupón hay una franja gris:
+al rascarla con el dedo aparece qué es el regalo y se despliega el resto de
+la tira (cuenta atrás, carta, música y álbum). Hasta entonces no se nombra el
+concierto, ni siquiera en el título de la pestaña.
+
+- El móvil recuerda que ya se rascó, así que solo pasa la primera vez.
+- Para volver a probarlo tú, abre la página en una ventana privada.
+- Debajo de la franja hay un botón "Destapar sin rascar", por si acaso.
+- El número de serie (070322) es el día que empezasteis a salir, y el código de
+  barras del final lleva escrito "TE AMO" en binario.
+
+---
+
 ## Cómo imprimir el panfleto
 
 1. Abre <https://adrighx.github.io/regalo2026/flyer.html>

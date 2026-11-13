@@ -1,36 +1,40 @@
 /* ============================================================
    REGALO PARA MÓNICA
-   Todo el comportamiento de la página.
-   Los textos y las fotos salen de config.js — aquí no hay que
-   tocar nada para actualizar el contenido.
+   Comportamiento de la página. Los textos y las fotos salen de
+   config.js: aquí no hay que tocar nada para cambiar contenido.
    ============================================================ */
 
 const config = window.GIFT_CONFIG || {};
 
 const RUTA_COLLAGE = "assets/collage/";
 const RUTA_THUMBS = "assets/collage/thumb/";
+const CLAVE_ABIERTO = "regalo-monica-abierto";
 
-/* ------------------------------------------------------------
-   Utilidades
-   ------------------------------------------------------------ */
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => Array.from(document.querySelectorAll(sel));
+const raiz = document.documentElement;
+
+const menosMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 // Devuelve el valor de config, o lo que ya hubiera en el HTML.
-// Usa ?? en vez de || para que un 0 no se considere "vacío".
 function valor(campo, porDefecto = "") {
   const v = config[campo];
   return v === undefined || v === null || v === "" ? porDefecto : v;
 }
 
-const menosMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
 /* ------------------------------------------------------------
-   1. Rellenar los textos desde config.js
+   1. Textos desde config.js
    ------------------------------------------------------------ */
 function rellenarTextos() {
+  // El nombre de la artista va con espacios "duros", para que nunca
+  // se parta en dos líneas ("Karol" arriba y "G" abajo).
+  const artista = String(valor("artist", ""));
+  const artistaPegado = artista.replace(/ /g, " ");
+
   $$("[data-field]").forEach((nodo) => {
-    nodo.textContent = String(valor(nodo.dataset.field, nodo.textContent));
+    let texto = String(valor(nodo.dataset.field, nodo.textContent));
+    if (artista) texto = texto.split(artista).join(artistaPegado);
+    nodo.textContent = texto;
   });
 
   $$("[data-field-href]").forEach((nodo) => {
@@ -39,7 +43,44 @@ function rellenarTextos() {
 }
 
 /* ------------------------------------------------------------
-   2. ¿En qué momento estamos? antes / el día / después
+   2. Número de serie y código de barras
+   El número sale de config.js (serialNumber); si no hay, se usa
+   la fecha del concierto (día, mes, año). Las
+   barras llevan escrito "TE AMO" en binario, letra a letra.
+   ------------------------------------------------------------ */
+function numeroDeSerie(evento) {
+  // Si config.js trae un número propio, manda ese
+  if (config.serialNumber) return String(config.serialNumber);
+  if (!evento) return "000000";
+  const dos = (n) => String(n).padStart(2, "0");
+  return dos(evento.getDate()) + dos(evento.getMonth() + 1) + dos(evento.getFullYear() % 100);
+}
+
+function pintarSerieYBarras(evento) {
+  const serie = numeroDeSerie(evento);
+  $$(".js-serie").forEach((nodo) => {
+    nodo.textContent = serie;
+  });
+
+  const barras = $("#barras");
+  if (!barras) return;
+
+  const bits = Array.from("TE AMO " + serie)
+    .map((letra) => letra.charCodeAt(0).toString(2).padStart(8, "0"))
+    .join("");
+
+  barras.innerHTML = "";
+  Array.from(bits).forEach((bit, i) => {
+    const barra = document.createElement("span");
+    // 1 = barra gruesa, 0 = barra fina; los huecos alternan
+    barra.style.width = bit === "1" ? "3px" : "1px";
+    barra.style.marginRight = i % 3 === 0 ? "3px" : "1.5px";
+    barras.append(barra);
+  });
+}
+
+/* ------------------------------------------------------------
+   3. ¿En qué momento estamos? antes / el día / después
    ------------------------------------------------------------ */
 function calcularFase() {
   const evento = new Date(valor("eventDate", "2027-06-11T21:00:00"));
@@ -47,8 +88,8 @@ function calcularFase() {
 
   const ahora = new Date();
 
-  // El "día del concierto" dura desde las 00:00 de ese día
-  // hasta las 06:00 de la mañana siguiente.
+  // El "día del concierto" va de las 00:00 de ese día
+  // a las 06:00 de la mañana siguiente.
   const inicioDia = new Date(evento);
   inicioDia.setHours(0, 0, 0, 0);
 
@@ -64,7 +105,7 @@ function calcularFase() {
 }
 
 function aplicarFase(fase) {
-  document.documentElement.dataset.phase = fase;
+  raiz.dataset.phase = fase;
 
   const textos = (config.fases || {})[fase];
   if (!textos) return;
@@ -77,10 +118,14 @@ function aplicarFase(fase) {
 
   const tituloAlbum = $("#album-title");
   if (tituloAlbum && textos.album) tituloAlbum.textContent = textos.album;
+
+  // Opcional: otra entradilla para ese momento (si no, se queda "message")
+  const entradilla = $(".entradilla");
+  if (entradilla && textos.mensaje) entradilla.textContent = textos.mensaje;
 }
 
 /* ------------------------------------------------------------
-   3. Cuenta atrás (y cuenta adelante cuando ya ha pasado)
+   4. Cuenta atrás (y cuenta adelante cuando ya ha pasado)
    ------------------------------------------------------------ */
 function iniciarCuentaAtras(evento) {
   if (!evento) return;
@@ -112,7 +157,192 @@ function iniciarCuentaAtras(evento) {
 }
 
 /* ------------------------------------------------------------
-   4. Collage de la portada
+   5. El rasca
+   Una capa gris pintada en un <canvas> encima del premio. El dedo
+   la va borrando; cuando falta más o menos la mitad, se destapa
+   todo y se despliega el resto de la tira.
+   ------------------------------------------------------------ */
+function estaAbierto() {
+  return raiz.dataset.abierto === "true";
+}
+
+function abrirRegalo({ animar = true } = {}) {
+  if (estaAbierto()) return;
+
+  raiz.dataset.abierto = "true";
+  if (animar && !menosMovimiento) raiz.classList.add("recien-abierto");
+
+  const resto = $("#tira-resto");
+  if (resto) resto.hidden = false;
+
+  const premio = $("#premio");
+  if (premio) premio.removeAttribute("aria-hidden");
+
+  const pregunta = $("#rasca-pregunta");
+  if (pregunta) {
+    pregunta.textContent =
+      raiz.dataset.phase === "despues" ? "Esto fue lo que vimos:" : "Esto es lo que vamos a ver:";
+  }
+
+  // Ahora sí: el título de la pestaña puede decirlo
+  document.title = `${valor("artist", "Concierto")} en ${valor("city", "")}, para ${valor(
+    "partnerName",
+    "ti"
+  )}`;
+
+  try {
+    localStorage.setItem(CLAVE_ABIERTO, "1");
+  } catch (e) {
+    /* navegación privada: se tendrá que rascar cada vez */
+  }
+}
+
+function pintarCapa(canvas) {
+  const zona = canvas.parentElement;
+  const escala = Math.min(window.devicePixelRatio || 1, 2);
+  const ancho = zona.clientWidth;
+  const alto = zona.clientHeight;
+
+  canvas.width = Math.round(ancho * escala);
+  canvas.height = Math.round(alto * escala);
+
+  const ctx = canvas.getContext("2d");
+  ctx.setTransform(escala, 0, 0, escala, 0, 0);
+  ctx.globalCompositeOperation = "source-over";
+
+  // Base plateada
+  const plata = ctx.createLinearGradient(0, 0, ancho, alto);
+  plata.addColorStop(0, "#c9cad6");
+  plata.addColorStop(0.5, "#aeb0c0");
+  plata.addColorStop(1, "#c3c4d1");
+  ctx.fillStyle = plata;
+  ctx.fillRect(0, 0, ancho, alto);
+
+  // Motas, para que parezca tinta de rasca y no un rectángulo liso
+  for (let i = 0; i < ancho * alto * 0.012; i += 1) {
+    ctx.fillStyle = Math.random() > 0.5 ? "rgba(255,255,255,0.35)" : "rgba(35,25,92,0.12)";
+    ctx.fillRect(Math.random() * ancho, Math.random() * alto, 1.4, 1.4);
+  }
+
+  // "RASCA AQUÍ" repetido en diagonal
+  ctx.save();
+  ctx.translate(ancho / 2, alto / 2);
+  ctx.rotate(-0.2);
+  ctx.fillStyle = "rgba(35, 25, 92, 0.5)";
+  ctx.font = '900 22px "Big Shoulders Display", "Arial Narrow", sans-serif';
+  ctx.textAlign = "center";
+  for (let y = -alto; y <= alto; y += 38) {
+    const desfase = (y / 38) % 2 === 0 ? 0 : 70;
+    for (let x = -ancho; x <= ancho; x += 140) {
+      ctx.fillText("RASCA AQUÍ", x + desfase, y);
+    }
+  }
+  ctx.restore();
+}
+
+function porcentajeRascado(canvas) {
+  const ctx = canvas.getContext("2d");
+  const { data } = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  let vacios = 0;
+  let total = 0;
+  // Con mirar uno de cada 32 píxeles sobra
+  for (let i = 3; i < data.length; i += 4 * 32) {
+    total += 1;
+    if (data[i] === 0) vacios += 1;
+  }
+  return total ? vacios / total : 0;
+}
+
+function conectarRasca() {
+  const canvas = $("#rasca-capa");
+  const atajo = $("#rasca-atajo");
+  if (!canvas) return;
+
+  // Si ya lo abrió otro día, o la noche ya llegó, no hay nada que rascar
+  let yaAbierto = false;
+  try {
+    yaAbierto = localStorage.getItem(CLAVE_ABIERTO) === "1";
+  } catch (e) {
+    /* sin localStorage */
+  }
+
+  if (yaAbierto || raiz.dataset.phase !== "antes") {
+    abrirRegalo({ animar: false });
+    return;
+  }
+
+  pintarCapa(canvas);
+  // La tipografía llega un pelín después: repintamos para que el texto salga bien
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => {
+      if (!estaAbierto() && !haRascado) pintarCapa(canvas);
+    });
+  }
+
+  let haRascado = false;
+  let rascando = false;
+  let ultimo = null;
+  let anchoPintado = canvas.parentElement.clientWidth;
+
+  const punto = (e) => {
+    const r = canvas.getBoundingClientRect();
+    return { x: e.clientX - r.left, y: e.clientY - r.top };
+  };
+
+  const borrar = (desde, hasta) => {
+    const ctx = canvas.getContext("2d");
+    ctx.globalCompositeOperation = "destination-out";
+    ctx.lineWidth = 38;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.beginPath();
+    ctx.moveTo(desde.x, desde.y);
+    ctx.lineTo(hasta.x, hasta.y);
+    ctx.stroke();
+  };
+
+  canvas.addEventListener("pointerdown", (e) => {
+    rascando = true;
+    haRascado = true;
+    ultimo = punto(e);
+    try {
+      canvas.setPointerCapture(e.pointerId);
+    } catch (err) {
+      /* si el navegador no deja capturar el puntero, se rasca igual */
+    }
+    borrar(ultimo, { x: ultimo.x + 0.1, y: ultimo.y });
+  });
+
+  canvas.addEventListener("pointermove", (e) => {
+    if (!rascando) return;
+    const actual = punto(e);
+    borrar(ultimo, actual);
+    ultimo = actual;
+  });
+
+  const soltar = () => {
+    if (!rascando) return;
+    rascando = false;
+    if (porcentajeRascado(canvas) > 0.45) abrirRegalo();
+  };
+
+  canvas.addEventListener("pointerup", soltar);
+  canvas.addEventListener("pointercancel", soltar);
+
+  // Si gira el móvil antes de rascar, la capa se repinta a su nuevo tamaño
+  window.addEventListener("resize", () => {
+    const ancho = canvas.parentElement.clientWidth;
+    if (estaAbierto() || haRascado || ancho === anchoPintado) return;
+    anchoPintado = ancho;
+    pintarCapa(canvas);
+  });
+
+  // Para quien no pueda o no quiera rascar (teclado, lector de pantalla)
+  atajo?.addEventListener("click", () => abrirRegalo());
+}
+
+/* ------------------------------------------------------------
+   6. Las fotos de los dos
    ------------------------------------------------------------ */
 function montarCollage() {
   const contenedor = $("#hero-collage");
@@ -120,40 +350,35 @@ function montarCollage() {
 
   const fotos = config.heroPhotos || [];
   contenedor.innerHTML = "";
-  contenedor.removeAttribute("aria-hidden");
 
   fotos.forEach((archivo, i) => {
     // Cada foto va dentro de su celda: así se puede acercar el encuadre
     // desde el CSS sin que la imagen se salga por encima de las vecinas.
-    const celda = document.createElement("div");
+    const celda = document.createElement("button");
+    celda.type = "button";
     celda.className = "poster-cell";
+    celda.setAttribute("aria-label", `Ver foto ${i + 1} de ${fotos.length}`);
 
     const img = document.createElement("img");
     img.src = RUTA_THUMBS + archivo;
     img.alt = "";
     img.decoding = "async";
-    // Las tres primeras entran en pantalla enseguida: sin lazy.
-    img.loading = i < 3 ? "eager" : "lazy";
+    img.loading = "lazy";
 
     celda.append(img);
-    contenedor.append(celda);
-  });
-
-  // Al tocar una foto del collage se abre grande
-  contenedor.addEventListener("click", (e) => {
-    const celda = e.target.closest(".poster-cell");
-    if (!celda) return;
-    const i = Array.from(contenedor.children).indexOf(celda);
-    abrirVisor(
-      fotos.map((f) => RUTA_COLLAGE + f),
-      i,
-      "Nosotros"
+    celda.addEventListener("click", () =>
+      abrirVisor(
+        fotos.map((f) => RUTA_COLLAGE + f),
+        i,
+        "Nosotros"
+      )
     );
+    contenedor.append(celda);
   });
 }
 
 /* ------------------------------------------------------------
-   5. El álbum de la noche
+   7. El álbum de la noche
    ------------------------------------------------------------ */
 function montarAlbum() {
   const galeria = $("#album-gallery");
@@ -166,15 +391,19 @@ function montarAlbum() {
 
   galeria.innerHTML = "";
 
-  // Todavía no hay fotos: una sola tarjeta con un mensaje bonito
+  // Todavía no hay fotos: un cupón en blanco, sin canjear
   if (!fotos.length) {
     galeria.classList.add("is-empty");
-    galeria.innerHTML = `
-      <div class="album-empty">
-        <span class="album-empty-icon" aria-hidden="true">📷</span>
-        <p>Este álbum todavía está en blanco.</p>
-        <small>El ${fecha} empezamos a llenarlo.</small>
-      </div>`;
+
+    const vacio = document.createElement("div");
+    vacio.className = "album-empty";
+    const linea = document.createElement("p");
+    linea.textContent = "Cupón sin canjear";
+    const nota = document.createElement("small");
+    nota.textContent = `Se cambia por fotos el ${fecha}.`;
+    vacio.append(linea, nota);
+    galeria.append(vacio);
+
     if (sub) sub.textContent = "Cuando pase la noche, todas las fotos vivirán aquí.";
     return;
   }
@@ -190,7 +419,7 @@ function montarAlbum() {
     const img = document.createElement("img");
     img.src = ruta;
     img.alt = "";
-    img.loading = i < 6 ? "eager" : "lazy";
+    img.loading = "lazy";
     img.decoding = "async";
 
     tarjeta.append(img);
@@ -206,7 +435,7 @@ function montarAlbum() {
 }
 
 /* ------------------------------------------------------------
-   6. Visor de fotos (lightbox)
+   8. Visor de fotos
    ------------------------------------------------------------ */
 const visor = {
   fotos: [],
@@ -223,15 +452,16 @@ function abrirVisor(fotos, indice, titulo) {
   visor.titulo = titulo || "";
   visor.ultimoFoco = document.activeElement;
 
-  const caja = $("#lightbox");
-  caja.hidden = false;
+  $("#lightbox").hidden = false;
   document.body.style.overflow = "hidden";
   pintarVisor();
   $("#lightbox-close").focus();
 }
 
 function cerrarVisor() {
-  $("#lightbox").hidden = true;
+  const caja = $("#lightbox");
+  if (!caja) return;
+  caja.hidden = true;
   document.body.style.overflow = "";
   if (visor.ultimoFoco) visor.ultimoFoco.focus();
 }
@@ -247,12 +477,11 @@ function pintarVisor() {
   const total = visor.fotos.length;
 
   img.src = visor.fotos[visor.indice];
-  img.alt = `${visor.titulo} — foto ${visor.indice + 1} de ${total}`;
+  img.alt = `${visor.titulo}, foto ${visor.indice + 1} de ${total}`;
 
   $("#lightbox-caption").textContent = visor.titulo;
-  $("#lightbox-counter").textContent = `${visor.indice + 1} / ${total}`;
+  $("#lightbox-counter").textContent = `${visor.indice + 1} de ${total}`;
 
-  // Con una sola foto no tiene sentido enseñar las flechas
   const hayVarias = total > 1;
   $("#lightbox-prev").hidden = !hayVarias;
   $("#lightbox-next").hidden = !hayVarias;
@@ -271,7 +500,7 @@ function conectarVisor() {
   $("#lightbox-prev").addEventListener("click", () => moverVisor(-1));
   $("#lightbox-next").addEventListener("click", () => moverVisor(1));
 
-  // Clic en el fondo cierra
+  // Tocar el fondo cierra
   caja.addEventListener("click", (e) => {
     if (e.target === caja || e.target.classList.contains("lightbox-stage")) cerrarVisor();
   });
@@ -283,7 +512,7 @@ function conectarVisor() {
     if (e.key === "ArrowRight") moverVisor(1);
   });
 
-  // Deslizar con el dedo en el móvil
+  // Deslizar con el dedo
   let inicioX = null;
   caja.addEventListener(
     "touchstart",
@@ -306,72 +535,7 @@ function conectarVisor() {
 }
 
 /* ------------------------------------------------------------
-   7. La sorpresa: destapar la entrada + confeti
-   ------------------------------------------------------------ */
-const CLAVE_ABIERTO = "regalo-monica-abierto";
-
-function lanzarConfeti() {
-  if (menosMovimiento) return;
-
-  const colores = ["#ff2d87", "#ff7a5c", "#12d8c4", "#dcff6b", "#7b3dff", "#ffc960"];
-  for (let i = 0; i < 110; i += 1) {
-    const trozo = document.createElement("span");
-    trozo.className = "confetti";
-    trozo.style.left = `${Math.random() * 100}vw`;
-    trozo.style.background = colores[i % colores.length];
-    trozo.style.animationDelay = `${Math.random() * 0.4}s`;
-    trozo.style.setProperty("--drift", `${Math.random() * 260 - 130}px`);
-    document.body.append(trozo);
-    trozo.addEventListener("animationend", () => trozo.remove());
-  }
-}
-
-function destaparRegalo({ conConfeti = true } = {}) {
-  const soporte = $("#ticket-holder");
-  if (!soporte || soporte.dataset.locked === "false") return;
-
-  soporte.dataset.locked = "false";
-  try {
-    localStorage.setItem(CLAVE_ABIERTO, "1");
-  } catch (e) {
-    /* navegación privada: da igual, se abrirá cada vez */
-  }
-
-  if (conConfeti) lanzarConfeti();
-}
-
-function conectarSorpresa() {
-  const soporte = $("#ticket-holder");
-  const botonPortada = $("#reveal-button");
-  const botonTapa = $("#lock-button");
-  if (!soporte) return;
-
-  // Si ya lo abrió antes, o el concierto ya pasó, no volvemos a taparlo
-  let yaAbierto = false;
-  try {
-    yaAbierto = localStorage.getItem(CLAVE_ABIERTO) === "1";
-  } catch (e) {
-    /* sin localStorage */
-  }
-
-  if (yaAbierto || document.documentElement.dataset.phase !== "antes") {
-    soporte.dataset.locked = "false";
-  }
-
-  botonTapa?.addEventListener("click", () => destaparRegalo());
-
-  botonPortada?.addEventListener("click", () => {
-    $("#regalo")?.scrollIntoView({
-      behavior: menosMovimiento ? "auto" : "smooth",
-      block: "start"
-    });
-    // Pequeña espera para que el confeti caiga cuando ya se ve la entrada
-    setTimeout(() => destaparRegalo(), menosMovimiento ? 0 : 650);
-  });
-}
-
-/* ------------------------------------------------------------
-   8. Reproductor de Spotify
+   9. Reproductor de Spotify
    ------------------------------------------------------------ */
 function montarReproductor() {
   const hueco = $("#player");
@@ -379,43 +543,15 @@ function montarReproductor() {
   if (!hueco || !id) return;
 
   const iframe = document.createElement("iframe");
-  // Ojo: tiene que ser la URL /embed/, la de compartir no se puede incrustar
-  iframe.src = `https://open.spotify.com/embed/playlist/${id}?utm_source=generator&theme=0`;
+  // Tiene que ser la URL /embed/: la de compartir no se puede incrustar
+  iframe.src = `https://open.spotify.com/embed/playlist/${id}?utm_source=generator`;
   iframe.width = "100%";
   iframe.height = "352";
-  iframe.title = "Nuestra lista de reproducción";
+  iframe.title = "Lista de reproducción para ir ensayando";
   iframe.loading = "lazy";
-  iframe.allow =
-    "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture";
-  iframe.setAttribute("allowfullscreen", "");
+  iframe.allow = "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture";
 
   hueco.append(iframe);
-}
-
-/* ------------------------------------------------------------
-   9. Animaciones de entrada al hacer scroll
-   ------------------------------------------------------------ */
-function conectarAnimaciones() {
-  const elementos = $$(".reveal");
-  if (!elementos.length) return;
-
-  if (menosMovimiento || !("IntersectionObserver" in window)) {
-    elementos.forEach((el) => el.classList.add("is-visible"));
-    return;
-  }
-
-  const observador = new IntersectionObserver(
-    (entradas) => {
-      entradas.forEach((entrada) => {
-        if (!entrada.isIntersecting) return;
-        entrada.target.classList.add("is-visible");
-        observador.unobserve(entrada.target);
-      });
-    },
-    { rootMargin: "0px 0px -12% 0px", threshold: 0.12 }
-  );
-
-  elementos.forEach((el) => observador.observe(el));
 }
 
 /* ------------------------------------------------------------
@@ -425,14 +561,14 @@ function iniciar() {
   const { fase, evento } = calcularFase();
 
   rellenarTextos();
+  pintarSerieYBarras(evento);
   aplicarFase(fase);
   iniciarCuentaAtras(evento);
   montarCollage();
   montarAlbum();
   conectarVisor();
-  conectarSorpresa();
+  conectarRasca();
   montarReproductor();
-  conectarAnimaciones();
 }
 
 iniciar();

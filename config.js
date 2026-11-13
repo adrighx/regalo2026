@@ -24,6 +24,10 @@ window.GIFT_CONFIG = {
   dateLabel: "11 de junio de 2027",
   timeLabel: "21:00 h",
 
+  /* --- El número de serie de la entrada -------------------
+     El día que empezamos a salir: 7 de marzo de 2022.       */
+  serialNumber: "070322",
+
   /* --- La dirección pública de la página ------------------
      IMPORTANTE: esta es la dirección a la que apunta el QR
      del panfleto. Una vez lo imprimas, NO renombres el
@@ -42,8 +46,8 @@ window.GIFT_CONFIG = {
   /* --- La carta ------------------------------------------- */
   letterTitle: "Esto no es solo un concierto.",
   letterBody:
-    "Es una excusa preciosa para hacer maleta, perdernos por Sevilla, llegar al Estadio La Cartuja, brindar por nosotros y guardar una noche de esas que se cuentan muchas veces después.",
-  footerLine: "Un regalo para empezar a cantar antes de llegar.",
+    "Es verte a ti viéndola a ella. Quiero estar a tu lado cuando salga al escenario y te vuelvas loca, oírte cantarlas todas a grito pelado y que acabemos los dos sin voz. Eso es lo que te regalo. Lo demás ya lo iremos viendo.",
+  footerLine: "Ve calentando la voz. Te quiero.",
 
   /* ============================================================
      EL PANFLETO IMPRIMIBLE
@@ -54,14 +58,14 @@ window.GIFT_CONFIG = {
      Si tocas estos textos, no metas pistas.
      ============================================================ */
   flyer: {
-    kicker: "Para el amor de mi vida · Feliz cumpleaños",
+    kicker: "Para el amor de mi vida",
     title: "Tu regalo no cabe en este papel.",
     lead:
       "Lo que te he preparado no se puede envolver ni meter en una caja. Está entero detrás de este código.",
     qrTitle: "Escanéame",
     qrText: "Aquí dentro está el regalo. Y un álbum que iremos llenando.",
     note:
-      "Guarda este papel: el código seguirá funcionando mucho después de esa noche. Ahí iremos dejando las fotos, para poder volver cuando queramos.",
+      "No tires este papel. Ya sé que no lo ibas a tirar, pero lo pongo por escrito: el código va a seguir funcionando y ahí iremos subiendo fotos. Si lo pierdes te imprimo otro, pero me lo apunto.",
     sign: "Ábrelo. Te va a gustar."
   },
 
@@ -75,10 +79,10 @@ window.GIFT_CONFIG = {
      Las 8 primeras son también las del panfleto.            */
   heroPhotos: [
     "photo-01.jpg", // 1
-    "photo-25.jpg", // 2
+    "photo-06.jpg", // 2
     "photo-08.jpg", // 3
     "photo-13.jpg", // 4
-    "photo-06.jpg", // 5
+    "photo-25.jpg", // 5
     "photo-09.jpg", // 6
     "photo-19.jpg", // 7
     "photo-05.jpg", // 8
@@ -120,6 +124,8 @@ window.GIFT_CONFIG = {
     despues: {
       etiqueta: "Ha pasado desde nuestra noche",
       titulo: "Aquella noche en Sevilla.",
+      // "mensaje" sustituye a la entradilla de arriba cuando ya ha pasado
+      mensaje: "El 11 de junio de 2027 nos fuimos a Sevilla. Aquí queda guardado.",
       album: "Nuestra noche, guardada para siempre."
     }
   }

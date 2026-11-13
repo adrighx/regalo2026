@@ -1,39 +1,31 @@
 <!doctype html>
-<html lang="es" data-phase="antes">
+<html lang="es" data-phase="antes" data-abierto="false">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#120a16" />
+    <meta name="theme-color" content="#1b1446" />
 
-    <title>Un regalo para Mónica · Karol G en Sevilla</title>
-    <meta
-      name="description"
-      content="Dos entradas para ver a Karol G en Sevilla el 11 de junio de 2027. Y un sitio donde guardar esa noche para siempre."
-    />
+    <!-- El título y la vista previa NO dicen qué es el regalo: eso se
+         descubre rascando. script.js completa el título después. -->
+    <title>Un regalo para Mónica</title>
+    <meta name="description" content="Tienes una entrada a tu nombre. Rasca para ver de qué." />
 
-    <!-- Para que se vea bonito al compartir el enlace por WhatsApp -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Un regalo para Mónica" />
-    <meta
-      property="og:description"
-      content="Karol G. Sevilla. 11 de junio de 2027. Dos entradas."
-    />
-    <!-- WhatsApp y compañía necesitan la dirección completa, no una ruta relativa -->
+    <meta property="og:description" content="Tienes una entrada a tu nombre. Rasca para ver de qué." />
     <meta property="og:url" content="https://adrighx.github.io/regalo2026/" />
     <meta
       property="og:image"
-      content="https://adrighx.github.io/regalo2026/assets/collage/photo-10.jpg"
+      content="https://adrighx.github.io/regalo2026/assets/collage/photo-01.jpg"
     />
     <meta property="og:locale" content="es_ES" />
-    <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="assets/collage/thumb/photo-10.jpg" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Caveat:wght@500;700&family=Schibsted+Grotesk:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
@@ -42,201 +34,155 @@
   </head>
 
   <body>
-    <a class="skip-link" href="#regalo">Ir directamente al regalo</a>
+    <a class="saltar" href="#inicio">Ir a la entrada</a>
 
-    <!-- ============================ PORTADA ============================ -->
-    <header class="hero" id="inicio">
-      <div class="aurora" aria-hidden="true">
-        <span></span><span></span><span></span>
-      </div>
-      <div class="grain" aria-hidden="true"></div>
-
-      <nav class="topbar" aria-label="Navegación">
-        <a class="brand" href="#inicio" aria-label="Te amo">
-          <span class="brand-heart" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="20" height="20">
-              <path fill="currentColor" d="M12 21C5.5 16.4 2 13 2 9.2 2 6.3 4.3 4 7.2 4c1.7 0 3.3.8 4.3 2.1L12 6.4l.5-.3C13.5 4.8 15.1 4 16.8 4 19.7 4 22 6.3 22 9.2 22 13 18.5 16.4 12 21Z"/>
-            </svg>
-          </span>
-          <span class="brand-text" aria-hidden="true">
-            <b>T</b><b>E</b><i></i><b>A</b><b>M</b><b>O</b>
-          </span>
-        </a>
-        <div class="topbar-links">
-          <a class="nav-link" href="#album">Álbum</a>
-          <a class="nav-link nav-link--print" href="flyer.html">Panfleto</a>
-        </div>
-      </nav>
-
-      <div class="hero-grid">
-        <div class="hero-copy">
-          <p class="eyebrow">
-            <span class="dot" aria-hidden="true"></span>
-            Una sorpresa con destino a <span data-field="city">Sevilla</span>
-          </p>
-
-          <h1 id="hero-title" data-field="heroTitle">Prepárate para un día inolvidable.</h1>
-
-          <p class="lead" data-field="message">
-            Te he preparado una sorpresa: el 11 de junio nos vamos a Sevilla a vivir una noche de música,
-            brillo y perreo bonito.
-          </p>
-
-          <div class="actions">
-            <button class="btn btn--primary" id="reveal-button" type="button">
-              <span>Descubrir el regalo</span>
-              <svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18">
-                <path d="M12 5v14m0 0-6-6m6 6 6-6" fill="none" stroke="currentColor"
-                      stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </button>
-            <a class="btn btn--ghost" data-field-href="playlistUrl" href="#musica">
-              Calentar motores
-            </a>
-          </div>
-        </div>
-
-        <figure class="poster" aria-label="Fotos nuestras">
-          <div class="poster-collage" id="hero-collage" aria-hidden="true"></div>
-          <figcaption>
-            <span>Gira en España</span>
-            <strong data-field="artist">Karol G</strong>
-          </figcaption>
-        </figure>
-      </div>
-
-      <div class="scroll-hint" aria-hidden="true">
-        <span></span>
-      </div>
+    <header class="taquilla">
+      <a class="marca" href="#inicio" aria-label="Te amo">
+        <svg class="marca-corazon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+          <path fill="currentColor" d="M12 21C5.5 16.4 2 13 2 9.2 2 6.3 4.3 4 7.2 4c1.7 0 3.3.8 4.3 2.1L12 6.4l.5-.3C13.5 4.8 15.1 4 16.8 4 19.7 4 22 6.3 22 9.2 22 13 18.5 16.4 12 21Z"/>
+        </svg>
+        <span class="marca-texto" aria-hidden="true">Te amo</span>
+      </a>
+      <p class="serie" aria-label="Número de serie">N.º <span class="js-serie">070322</span></p>
     </header>
 
-    <main>
-      <!-- ============================ EL REGALO ============================ -->
-      <section class="reveal-band" id="regalo" aria-labelledby="ticket-title">
-        <div class="wrap">
-          <div class="section-heading reveal">
-            <p class="eyebrow"><span class="dot" aria-hidden="true"></span> El regalo</p>
-            <h2 id="ticket-title">Dos entradas. Karol G. Muchísimas canciones. Un día inolvidable.</h2>
+    <!-- ====================================================================
+         LA TIRA DE ENTRADAS
+         Cada <section class="cupon"> es un cupón de la tira. Los de dentro
+         de #tira-resto están plegados hasta que ella rasca el primero.
+         ==================================================================== -->
+    <main class="tira" id="tira">
+      <!-- ---------------- CUPÓN 1: la entrada, con el rasca ---------------- -->
+      <section class="cupon cupon--rosa" id="inicio" aria-labelledby="hero-title">
+        <h1 id="hero-title" data-field="heroTitle">Prepárate para un día inolvidable.</h1>
+
+        <p class="entradilla" data-field="message">
+          Te he preparado una sorpresa: el 11 de junio nos vamos a Sevilla a vivir una experiencia
+          que te va a encantar.
+        </p>
+
+        <dl class="datos">
+          <div>
+            <dt>Destino</dt>
+            <dd><span data-field="city">Sevilla</span>, <span data-field="country">España</span></dd>
           </div>
+          <div>
+            <dt>Fecha</dt>
+            <dd data-field="dateLabel">11 de junio de 2027</dd>
+          </div>
+          <div>
+            <dt>Asiento</dt>
+            <dd>A mi lado</dd>
+          </div>
+          <div>
+            <dt>Precio</dt>
+            <dd>Un beso</dd>
+          </div>
+        </dl>
 
-          <div class="ticket-holder" id="ticket-holder" data-locked="true">
-            <article class="ticket reveal" aria-label="Entrada regalo">
-              <div class="ticket-main">
-                <p class="ticket-kicker">
-                  Sorpresa para <span data-field="partnerLabel">el amor de mi vida</span>
-                </p>
-                <h3 data-field="revealLine">¡Tenemos entradas para ver a Karol G en Sevilla!</h3>
+        <div class="rasca" id="rasca">
+          <p class="rasca-pregunta" id="rasca-pregunta">¿Y a qué vamos? Rasca la franja gris.</p>
 
-                <dl class="ticket-details">
-                  <div>
-                    <dt>Artista</dt>
-                    <dd data-field="artist">Karol G</dd>
-                  </div>
-                  <div>
-                    <dt>Ciudad</dt>
-                    <dd>
-                      <span data-field="city">Sevilla</span>,
-                      <span data-field="country">España</span>
-                    </dd>
-                  </div>
-                  <div>
-                    <dt>Fecha</dt>
-                    <dd data-field="dateLabel">11 de junio de 2027</dd>
-                  </div>
-                  <div>
-                    <dt>Recinto</dt>
-                    <dd data-field="venue">Estadio La Cartuja</dd>
-                  </div>
-                </dl>
-              </div>
-
-              <div class="ticket-stub" aria-hidden="true">
-                <strong data-field="tickets">2</strong>
-                <small>entradas</small>
-                <div class="stub-code"></div>
-              </div>
-            </article>
-
-            <!-- Tapa que oculta el regalo hasta que ella pulsa el botón -->
-            <div class="ticket-lock" id="ticket-lock">
-              <button type="button" class="lock-button" id="lock-button">
-                <span class="lock-emoji" aria-hidden="true">🎁</span>
-                <span class="lock-text">Toca para abrir</span>
-              </button>
+          <div class="rasca-zona" id="rasca-zona">
+            <div class="premio" id="premio" aria-hidden="true">
+              <p class="premio-linea" data-field="revealLine">
+                ¡Tenemos entradas para ver a Karol G en Sevilla!
+              </p>
+              <p class="premio-detalle">
+                <span data-field="venue">Estadio La Cartuja</span>, a las
+                <span data-field="timeLabel">21:00 h</span>
+              </p>
             </div>
+            <canvas class="rasca-capa" id="rasca-capa" aria-hidden="true"></canvas>
           </div>
 
-          <!-- --------------------- CUENTA ATRÁS --------------------- -->
-          <div class="countdown-block reveal">
-            <p class="eyebrow countdown-label" id="countdown-label">
-              <span class="dot" aria-hidden="true"></span>
-              <span id="countdown-label-text">Faltan para la gran noche</span>
-            </p>
-
-            <div class="countdown" id="countdown" role="timer" aria-live="off">
-              <div><strong id="days">--</strong><span>días</span></div>
-              <div><strong id="hours">--</strong><span>horas</span></div>
-              <div><strong id="minutes">--</strong><span>min</span></div>
-              <div><strong id="seconds">--</strong><span>seg</span></div>
-            </div>
-
-            <p class="countdown-note">
-              <span data-field="venue">Estadio La Cartuja</span> ·
-              <span data-field="dateLabel">11 de junio de 2027</span> ·
-              <span data-field="timeLabel">21:00 h</span>
-            </p>
-          </div>
+          <button class="rasca-atajo" id="rasca-atajo" type="button">Destapar sin rascar</button>
         </div>
+
+        <!-- Sellos de tinta: uno al destapar, otro cuando ya ha pasado la noche -->
+        <p class="sello sello--valida" aria-hidden="true">
+          <b data-field="tickets">2</b> entradas
+        </p>
+        <p class="sello sello--usada" aria-hidden="true">Usada y bien disfrutada</p>
       </section>
 
-      <!-- ============================ LA CARTA ============================ -->
-      <section class="letter" id="musica" aria-labelledby="letter-title">
-        <div class="wrap letter-grid">
-          <div class="reveal">
-            <p class="eyebrow"><span class="dot" aria-hidden="true"></span> Antes de ir</p>
-            <h2 id="letter-title" data-field="letterTitle">Esto no es solo un concierto.</h2>
+      <!-- ---------------- CUPÓN 2: nosotros ---------------- -->
+      <section class="cupon cupon--celeste perforado" id="nosotros" aria-labelledby="nosotros-titulo">
+        <h2 id="nosotros-titulo">Los dos titulares de las entradas</h2>
+        <p class="cupon-nota">Toca cualquier foto para verla entera.</p>
+        <div class="poster-collage" id="hero-collage"></div>
+      </section>
+
+      <p class="tira-aviso" id="tira-aviso">
+        La tira sigue, pero está plegada. Se despliega cuando rasques.
+      </p>
+
+      <div class="tira-resto" id="tira-resto" hidden>
+        <!-- ---------------- CUPÓN 3: cuenta atrás ---------------- -->
+        <section class="cupon cupon--amarillo perforado" id="cuenta" aria-labelledby="countdown-label-text">
+          <h2 id="countdown-label-text">Faltan para la gran noche</h2>
+
+          <div class="cuenta" id="countdown" role="timer" aria-live="off">
+            <p class="cuenta-dias"><strong id="days">--</strong> <span>días</span></p>
+            <p class="cuenta-resto">
+              <strong id="hours">--</strong> h
+              <strong id="minutes">--</strong> min
+              <strong id="seconds">--</strong> s
+            </p>
           </div>
 
-          <div class="letter-body reveal">
+          <div class="condiciones">
+            <h3>Condiciones de uso</h3>
+            <ol>
+              <li>No se admiten devoluciones. Ni de la entrada ni del acompañante.</li>
+              <li>La titular se compromete a cantarlas todas, se sepa la letra o no.</li>
+              <li>El acompañante sujeta el móvil, la bebida y lo que haga falta.</li>
+              <li>Válida para dos personas. Siempre las mismas dos.</li>
+              <li>Prohibido quedarse sin batería antes de la canción buena.</li>
+              <li>Si la titular llora, el acompañante no hará comentarios. Grabará, pero no hará comentarios.</li>
+              <li>Esta entrada caduca el 11 de junio de 2027. El acompañante, no.</li>
+            </ol>
+          </div>
+        </section>
+
+        <!-- ---------------- CUPÓN 4: el reverso, escrito a mano ---------------- -->
+        <section class="cupon cupon--reverso perforado" id="musica" aria-labelledby="letter-title">
+          <h2 id="letter-title" data-field="letterTitle">Esto no es solo un concierto.</h2>
+
+          <div class="carta">
             <p data-field="letterBody">
               Es una excusa preciosa para hacer maleta, perdernos por Sevilla, llegar al Estadio La
               Cartuja, brindar por nosotros y guardar una noche de esas que se cuentan muchas veces
               después.
             </p>
-            <p class="letter-sign" data-field="footerLine">
+            <p class="carta-firma" data-field="footerLine">
               Un regalo para empezar a cantar antes de llegar.
             </p>
-
-            <div class="player" id="player">
-              <!-- El iframe de Spotify lo monta script.js con el id de config.js -->
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ============================ EL ÁLBUM ============================ -->
-      <section class="album" id="album" aria-labelledby="album-title">
-        <div class="wrap">
-          <div class="section-heading reveal">
-            <p class="eyebrow"><span class="dot" aria-hidden="true"></span> El álbum de la noche</p>
-            <h2 id="album-title">Aquí guardaremos los recuerdos de esa noche.</h2>
-            <p class="section-sub" id="album-sub">
-              Todavía está en blanco. El 11 de junio de 2027 empezamos a llenarlo.
-            </p>
           </div>
 
-          <div class="album-gallery" id="album-gallery"></div>
-        </div>
-      </section>
+          <h3 class="ensayo-titulo">Para ir ensayando</h3>
+          <div class="player" id="player"></div>
+          <a class="enlace" data-field-href="playlistUrl" href="#musica">Abrir la lista en Spotify</a>
+        </section>
 
-      <footer class="site-footer">
-        <div class="wrap footer-grid">
-          <p>
-            Hecho a mano para <strong data-field="partnerLabel">el amor de mi vida</strong> ·
-            <span data-field="dateLabel">11 de junio de 2027</span>
+        <!-- ---------------- CUPÓN 5: el álbum ---------------- -->
+        <section class="cupon cupon--menta perforado" id="album" aria-labelledby="album-title">
+          <h2 id="album-title">Aquí guardaremos los recuerdos de esa noche.</h2>
+          <p class="cupon-nota" id="album-sub">
+            Cuando pase la noche, todas las fotos vivirán aquí.
           </p>
-          <a class="nav-link" href="flyer.html">Ver el panfleto imprimible</a>
-        </div>
+          <div class="album-gallery" id="album-gallery"></div>
+        </section>
+      </div>
+
+      <!-- ---------------- LA MATRIZ: el trozo que se queda la taquilla ---------------- -->
+      <footer class="cupon cupon--matriz perforado">
+        <div class="barras" id="barras" aria-hidden="true"></div>
+        <p class="barras-texto" aria-hidden="true">TE AMO <span class="js-serie">070322</span></p>
+        <p class="matriz-texto">
+          Hecho a mano para <span data-field="partnerLabel">el amor de mi vida</span>.
+        </p>
+        <a class="enlace" href="flyer.html">Ver el panfleto imprimible</a>
       </footer>
     </main>
 
