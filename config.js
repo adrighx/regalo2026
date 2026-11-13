@@ -47,7 +47,7 @@ window.GIFT_CONFIG = {
   letterTitle: "Esto no es solo un concierto.",
   letterBody:
     "Es verte a ti viéndola a ella. Quiero estar a tu lado cuando salga al escenario y te vuelvas loca, oírte cantarlas todas a grito pelado y que acabemos los dos sin voz. Eso es lo que te regalo. Lo demás ya lo iremos viendo.",
-  footerLine: "Ve calentando la voz. Te quiero.",
+  footerLine: "Ve calentando la voz. Te amo 🤍",
 
   /* ============================================================
      EL PANFLETO IMPRIMIBLE
@@ -65,7 +65,7 @@ window.GIFT_CONFIG = {
     qrTitle: "Escanéame",
     qrText: "Aquí dentro está el regalo. Y un álbum que iremos llenando.",
     note:
-      "No tires este papel. Ya sé que no lo ibas a tirar, pero lo pongo por escrito: el código va a seguir funcionando y ahí iremos subiendo fotos. Si lo pierdes te imprimo otro, pero me lo apunto.",
+      "Instrucciones de conservación: este papel no se tira, no se dobla y no se usa de posavasos. El código va a seguir funcionando y ahí iremos subiendo fotos. Si lo pierdes te imprimo otro, pero pienso recordártelo en todas las discusiones hasta 2040.",
     sign: "Ábrelo. Te va a gustar."
   },
 
